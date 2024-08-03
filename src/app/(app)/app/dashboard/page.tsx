@@ -1,6 +1,5 @@
 import Branding from "@/components/branding";
 import ContentBlock from "@/components/content-block";
-import H1 from "@/components/h1";
 import PetDetails from "@/components/pet-details";
 import PetList from "@/components/pet-list";
 import SearchForm from "@/components/search-form";
@@ -8,6 +7,7 @@ import Stats from "@/components/stats";
 import React from "react";
 
 export default function Page() {
+
   return (
     <main>
       <div className="flex items-center justify-between text-white py-8">
@@ -26,12 +26,10 @@ export default function Page() {
         </div>
 
         <div className="md:row-start-1 md:row-span-full md:col-start-2 md:col-span-full">
-
-        <ContentBlock>
-          <PetDetails />
-        </ContentBlock>
+          <ContentBlock>
+            <PetDetails />
+          </ContentBlock>
         </div>
-
       </div>
     </main>
   );
