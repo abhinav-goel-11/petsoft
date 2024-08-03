@@ -1,9 +1,10 @@
 "use client";
 
-import usePetContextProvider from "@/hooks/usePetContextProvider";
+import { usePetContextProvider } from "@/lib/hooks";
 import { Pet } from "@/lib/types";
 import Image from "next/image";
 import React from "react";
+import PetButton from "./pet-button";
 
 export default function PetDetails() {
   const { selectedPet } = usePetContextProvider();
@@ -26,8 +27,12 @@ type Props = {
   pet: Pet;
 };
 
-function EmptyView () {
-  return <p className="h-full place-content-center text-center text-2xl font-semibold text-zinc-400">No pet elected</p>
+function EmptyView() {
+  return (
+    <p className="h-full place-content-center text-center text-2xl font-semibold text-zinc-400">
+      No pet elected
+    </p>
+  );
 }
 function TopBar({ pet }: Props) {
   return (
@@ -40,6 +45,10 @@ function TopBar({ pet }: Props) {
         className="rounded-full h-[75px] w-[75px] object-cover"
       />
       <h2 className="text-3xl font-semibold leading-7 ml-5">{pet?.name}</h2>
+      <div className="ml-auto">
+        <PetButton actionType="edit">Edit</PetButton>
+        <PetButton actionType="checkout">Checkout</PetButton>
+      </div>
     </div>
   );
 }
