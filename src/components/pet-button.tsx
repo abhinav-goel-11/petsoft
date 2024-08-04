@@ -23,36 +23,36 @@ export default function PetButton({
   onClick,
 }: PetButtonProps) {
   const [isFormOpen, setIsFormOpen] = useState(false);
-  if (actionType === "add" || actionType === "edit") {
+  if (actionType === "checkout") {
     return (
-      <Dialog open={isFormOpen} onOpenChange={setIsFormOpen}>
-        <DialogTrigger asChild>
-          {actionType === "add" ? (
-            <Button size="icon">
-              <PlusIcon className="h-6 w-6" />
-            </Button>
-          ) : (
-            <Button variant="secondary">{children}</Button>
-          )}
-        </DialogTrigger>
-        <DialogContent>
-          <DialogHeader>
-            <DialogTitle>
-              {actionType === "add" ? "Add new pet" : "Edit pet"}
-            </DialogTitle>
-          </DialogHeader>
-          <PetForm
-            actionType={actionType}
-            onFormSubmission={() => setIsFormOpen(false)}
-          />
-        </DialogContent>
-      </Dialog>
+      <Button variant="secondary" onClick={onClick}>
+        {children}
+      </Button>
     );
   }
 
   return (
-    <Button variant="secondary" onClick={onClick}>
-      {children}
-    </Button>
+    <Dialog open={isFormOpen} onOpenChange={setIsFormOpen}>
+      <DialogTrigger asChild>
+        {actionType === "add" ? (
+          <Button size="icon">
+            <PlusIcon className="h-6 w-6" />
+          </Button>
+        ) : (
+          <Button variant="secondary">{children}</Button>
+        )}
+      </DialogTrigger>
+      <DialogContent>
+        <DialogHeader>
+          <DialogTitle>
+            {actionType === "add" ? "Add new pet" : "Edit pet"}
+          </DialogTitle>
+        </DialogHeader>
+        <PetForm
+          actionType={actionType}
+          onFormSubmission={() => setIsFormOpen(false)}
+        />
+      </DialogContent>
+    </Dialog>
   );
 }
