@@ -1,4 +1,6 @@
-import React from "react";
+"use client";
+
+import React, { useState } from "react";
 import { Button } from "./ui/button";
 import { PlusIcon } from "@radix-ui/react-icons";
 import {
@@ -20,9 +22,10 @@ export default function PetButton({
   children,
   onClick,
 }: PetButtonProps) {
+  const [isFormOpen, setIsFormOpen] = useState(false);
   if (actionType === "add" || actionType === "edit") {
     return (
-      <Dialog>
+      <Dialog open={isFormOpen} onOpenChange={setIsFormOpen}>
         <DialogTrigger asChild>
           {actionType === "add" ? (
             <Button size="icon">
@@ -38,7 +41,10 @@ export default function PetButton({
               {actionType === "add" ? "Add new pet" : "Edit pet"}
             </DialogTitle>
           </DialogHeader>
-          <PetForm />
+          <PetForm
+            actionType={actionType}
+            onFormSubmission={() => setIsFormOpen(false)}
+          />
         </DialogContent>
       </Dialog>
     );

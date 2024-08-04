@@ -30,7 +30,7 @@ type Props = {
 function EmptyView() {
   return (
     <p className="h-full place-content-center text-center text-2xl font-semibold text-zinc-400">
-      No pet elected
+      No pet selected
     </p>
   );
 }
