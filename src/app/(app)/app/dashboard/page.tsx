@@ -8,7 +8,6 @@ import Stats from "@/components/stats";
 import React from "react";
 
 export default function Page() {
-
   return (
     <main>
       <div className="flex items-center justify-between text-white py-8">
@@ -24,8 +23,7 @@ export default function Page() {
           <ContentBlock>
             <PetList />
             <div className="absolute bottom-4 right-4">
-
-            <PetButton actionType="add"/>
+              <PetButton actionType="add" />
             </div>
           </ContentBlock>
         </div>

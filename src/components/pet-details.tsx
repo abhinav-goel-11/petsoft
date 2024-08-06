@@ -50,7 +50,8 @@ function TopBar({ pet }: Props) {
         <PetButton actionType="edit">Edit</PetButton>
         <PetButton
           actionType="checkout"
-          onClick={() => handleCheckoutPet(pet?.id)}
+          // disabled={isPending}
+          onClick={async () => await handleCheckoutPet(pet.id)}
         >
           Checkout
         </PetButton>
