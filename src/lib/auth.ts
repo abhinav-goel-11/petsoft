@@ -49,12 +49,19 @@ const config = {
         return false;
       }
 
-      if (isLoggedIn && isTryingToAcessApp) {
+      if (isLoggedIn && isTryingToAcessApp && auth?.user.hasAccess) {
         return true;
       }
 
       if (isLoggedIn && !isTryingToAcessApp) {
-        return Response.redirect(new URL("/app/dashboard", request.url));
+        if (
+          request.nextUrl.pathname.includes("/login") ||
+          request.nextUrl.pathname.includes("/signup")
+        ) {
+          return Response.redirect(new URL("/payment", request.url));
+        } else {
+          return true;
+        }
       }
 
       if (!isLoggedIn && !isTryingToAcessApp) {
@@ -65,12 +72,14 @@ const config = {
     jwt: ({ token, user }) => {
       if (user) {
         token.userId = user.id;
+        token.hasAccess = user.hasAccess;
       }
       return token;
     },
     session: ({ session, token }) => {
       if (session.user) {
         session.user.id = token.userId;
+        session.user.hasAccess = token.hasAccess;
       }
 
       return session;
