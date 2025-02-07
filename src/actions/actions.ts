@@ -246,8 +246,6 @@ export async function createCheckoutSession() {
     cancel_url: `${process.env.CANONICAL_URL}/payment?cancelled=true`,
   });
 
-  console.log("checkoutSession ===>", checkoutSession);
-
   // redirect user
   redirect(checkoutSession.url as string);
 }

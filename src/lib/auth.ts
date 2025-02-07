@@ -49,14 +49,18 @@ const config = {
         return false;
       }
 
+      if (isLoggedIn && isTryingToAcessApp && !auth?.user.hasAccess) {
+        return false;
+      }
       if (isLoggedIn && isTryingToAcessApp && auth?.user.hasAccess) {
         return true;
       }
 
       if (isLoggedIn && !isTryingToAcessApp) {
         if (
-          request.nextUrl.pathname.includes("/login") ||
-          request.nextUrl.pathname.includes("/signup")
+          (request.nextUrl.pathname.includes("/login") ||
+            request.nextUrl.pathname.includes("/signup")) &&
+          !auth?.user.hasAccess
         ) {
           return Response.redirect(new URL("/payment", request.url));
         } else {
@@ -69,18 +73,23 @@ const config = {
       }
       return false;
     },
-    jwt: ({ token, user }) => {
+    jwt: async ({ token, user, trigger }) => {
       if (user) {
         token.userId = user.id;
+        token.email = user.email!;
         token.hasAccess = user.hasAccess;
+      }
+      if (trigger === "update") {
+        const useFromDb = await getUserByEmail(token.email);
+        if (useFromDb) {
+          token.hasAccess = useFromDb.hasAccess;
+        }
       }
       return token;
     },
     session: ({ session, token }) => {
-      if (session.user) {
-        session.user.id = token.userId;
-        session.user.hasAccess = token.hasAccess;
-      }
+      session.user.id = token.userId;
+      session.user.hasAccess = token.hasAccess;
 
       return session;
     },
