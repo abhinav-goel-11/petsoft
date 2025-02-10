@@ -3,7 +3,7 @@ const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 
 export async function POST(request: Request) {
   const body = await request.text();
-  const signature = request.headers.get("strip-signature");
+  const signature = request.headers.get("stripe-signature");
 
   let event;
   //verify webhook from stripe
@@ -11,7 +11,7 @@ export async function POST(request: Request) {
     event = stripe.webhooks.constructEvent(
       body,
       signature as string,
-      process.env.STRIPE_WEBHOOK_SECRET || ""
+      process.env.STRIPE_WEBHOOK_SECRET
     );
   } catch (err) {
     console.log("Webhook verification Failed", err);
