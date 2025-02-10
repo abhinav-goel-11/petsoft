@@ -50,7 +50,7 @@ const config = {
       }
 
       if (isLoggedIn && isTryingToAcessApp && !auth?.user.hasAccess) {
-        return false;
+        return Response.redirect(new URL("/payment", request.nextUrl));
       }
       if (isLoggedIn && isTryingToAcessApp && auth?.user.hasAccess) {
         return true;
@@ -59,10 +59,10 @@ const config = {
       if (
         isLoggedIn &&
         (request.nextUrl.pathname.includes("/login") ||
-          (request.nextUrl.pathname.includes("/signup") &&
-            auth?.user.hasAccess))
+          request.nextUrl.pathname.includes("/signup")) &&
+        auth?.user.hasAccess
       ) {
-        return Response.redirect(new URL("/app/dashboard", request.url));
+        return Response.redirect(new URL("/app/dashboard", request.nextUrl));
       }
 
       if (isLoggedIn && !isTryingToAcessApp && !auth?.user.hasAccess) {
@@ -71,9 +71,8 @@ const config = {
           request.nextUrl.pathname.includes("/signup")
         ) {
           return Response.redirect(new URL("/payment", request.url));
-        } else {
-          return true;
         }
+        return true;
       }
 
       if (!isLoggedIn && !isTryingToAcessApp) {
