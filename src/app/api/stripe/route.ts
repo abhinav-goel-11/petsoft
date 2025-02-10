@@ -1,5 +1,5 @@
 import prisma from "@/lib/db";
-const stripe = require(process.env.STRIPE_SECRET_KEY || "");
+const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 
 export async function POST(request: Request) {
   const body = await request.text();
